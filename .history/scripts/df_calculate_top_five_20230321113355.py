@@ -94,45 +94,16 @@ def calculate_deltas(df_fte, df_ftc, df_pro_serv, df_software, df_actuals, ACTUA
     df_sum = df_pivot.groupby(['YEAR','Vendor','EXPENSE_BUCKET'], as_index=False).sum()
     df_sum['MONTH_NAME']='ALL'
     df_sum['MONTH']="999"
-    
 
     df_top_5 = df_sum.loc[(df_sum['Vendor']!="# NO VENDOR")].sort_values(by=['ACTUAL'], ascending=False).head(5)
     TOP_5_ARRAY = df_top_5["Vendor"].values
     # convert the array to a string, then remove the brackets and single quotes
     TOP_5_ARRAY_STR = str(TOP_5_ARRAY).replace("[", "").replace("]", "").replace("'", "")
     logging.debug("here is the top 5 array as a string: " + TOP_5_ARRAY_STR)
-
-    df_pivot_cash = df.pivot_table(index=['YEAR', 'QUARTER', 'MONTH_NAME','MONTH','Vendor', 'BU', 'Function', 'IS Grouping','EXPENSE_BUCKET', 'CASH_VIEW'], values='ALLOCATED_AMOUNT', columns='PROJ_ACT', aggfunc='sum')
-    df_pivot_cash.reset_index(inplace=True)
-    df_pivot_cash = df_pivot_cash.loc[(df_pivot_cash['CASH_VIEW']=='CASH')]
-
-    df_sum_cash = df_pivot_cash.groupby(['YEAR','Vendor','EXPENSE_BUCKET'], as_index=False).sum()
-    df_top_5_cash = df_sum_cash.loc[(df_sum['Vendor']!="# NO VENDOR")].sort_values(by=['ACTUAL'], ascending=False).head(5)
-    TOP_5_CASH_ARRAY = df_top_5_cash["Vendor"].values
-    # convert the array to a string, then remove the brackets and single quotes
-    TOP_5_CASH_ARRAY_STR = str(TOP_5_CASH_ARRAY).replace("[", "").replace("]", "").replace("'", "")
-    logging.debug("here is the top 5 cash array as a string: " + TOP_5_CASH_ARRAY)
-
     df = df_sum.append(df_pivot)
     df["TOP_5"] = 0
     for V in TOP_5_ARRAY:
         df["TOP_5"] = np.where(df['Vendor']==V, 1, df["TOP_5"])
-    df["TOP_5_CASH"] = 0
-    for V in TOP_5_CASH_ARRAY:
-        df["TOP_5_CASH"] = np.where(df['Vendor']==V, 1, df["TOP_5_CASH"])
-
-
-
-
-
-    
-    df = df_sum.append(df_pivot)
-    df["TOP_5"] = 0
-    for V in TOP_5_ARRAY:
-        df["TOP_5"] = np.where(df['Vendor']==V, 1, df["TOP_5"])
-
-
-
 
 
     df.fillna({'PROJECTION':0, 'ACTUAL':0, 'QUARTER':"ALL"}, inplace=True)

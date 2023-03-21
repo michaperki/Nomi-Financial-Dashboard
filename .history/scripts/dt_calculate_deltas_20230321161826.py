@@ -102,9 +102,9 @@ def calculate_deltas(df_fte, df_ftc, df_pro_serv, df_software, df_actuals, ACTUA
     TOP_5_ARRAY_STR = str(TOP_5_ARRAY).replace("[", "").replace("]", "").replace("'", "")
     logging.debug("here is the top 5 array as a string: " + TOP_5_ARRAY_STR)
 
-    df_pivot_cash = df.pivot_table(index=['YEAR', 'QUARTER', 'MONTH_NAME','MONTH','Vendor', 'BU', 'Function', 'IS Grouping','EXPENSE_BUCKET', 'CASH_VIEW'], values='ALLOCATED_AMOUNT', columns='PROJ_ACT', aggfunc='sum')
+    df_pivot_cash = df.pivot_table(index=['YEAR', 'QUARTER', 'MONTH_NAME','MONTH','Vendor', 'BU', 'Function', 'IS Grouping','EXPENSE_BUCKET', 'CASH'], values='ALLOCATED_AMOUNT', columns='PROJ_ACT', aggfunc='sum')
     df_pivot_cash.reset_index(inplace=True)
-    df_pivot_cash = df_pivot_cash.loc[(df_pivot_cash['CASH_VIEW']=='CASH')]
+    df_pivot_cash = df_pivot_cash.loc[(df_pivot_cash['CASH']=='CASH')]
 
     df_sum_cash = df_pivot_cash.groupby(['YEAR','Vendor','EXPENSE_BUCKET'], as_index=False).sum()
     df_top_5_cash = df_sum_cash.loc[(df_sum['Vendor']!="# NO VENDOR")].sort_values(by=['ACTUAL'], ascending=False).head(5)
@@ -117,7 +117,7 @@ def calculate_deltas(df_fte, df_ftc, df_pro_serv, df_software, df_actuals, ACTUA
     df["TOP_5"] = 0
     for V in TOP_5_ARRAY:
         df["TOP_5"] = np.where(df['Vendor']==V, 1, df["TOP_5"])
-    df["TOP_5_CASH"] = 0
+    df["TOP_5_CASH_ARRAY"] = 0
     for V in TOP_5_CASH_ARRAY:
         df["TOP_5_CASH"] = np.where(df['Vendor']==V, 1, df["TOP_5_CASH"])
 

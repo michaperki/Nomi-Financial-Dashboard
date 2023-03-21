@@ -117,7 +117,7 @@ def calculate_deltas(df_fte, df_ftc, df_pro_serv, df_software, df_actuals, ACTUA
     df["TOP_5"] = 0
     for V in TOP_5_ARRAY:
         df["TOP_5"] = np.where(df['Vendor']==V, 1, df["TOP_5"])
-    df["TOP_5_CASH"] = 0
+    df["TOP_5_CASH_ARRAY"] = 0
     for V in TOP_5_CASH_ARRAY:
         df["TOP_5_CASH"] = np.where(df['Vendor']==V, 1, df["TOP_5_CASH"])
 
