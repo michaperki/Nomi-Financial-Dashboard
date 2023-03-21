@@ -8,7 +8,7 @@ compile_scripts.py gathers the needed libraries, constants, and functions and co
 The output script is saved in the compiled_scripts folder.
 
 ## Process
-At ahe highest level, the process is as follows:
+At the highest level, the process is as follows:
 ```mermaid
 graph TD;
     A(<b>Initialize</b> <ol><li>detect environment</li><li>declare constants</li><li>create output list</li>) --> B;
