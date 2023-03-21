@@ -112,9 +112,17 @@ def calculate_deltas(df_fte, df_ftc, df_pro_serv, df_software, df_actuals, ACTUA
     # convert the array to a string, then remove the brackets and single quotes
     TOP_5_CASH_ARRAY_STR = str(TOP_5_CASH_ARRAY).replace("[", "").replace("]", "").replace("'", "")
     logging.debug("here is the top 5 cash array as a string: " + TOP_5_CASH_ARRAY)
-        
-    df = df_sum.append(df_pivot)
 
+    df = df_sum.append(df_pivot)
+    df["TOP_5"] = 0
+    for V in TOP_5_ARRAY:
+        df["TOP_5"] = np.where(df['Vendor']==V, 1, df["TOP_5"])
+    df["TOP_5_CASH"] = 0
+    for V in TOP_5_CASH_ARRAY:
+        df["TOP_5_CASH"] = np.where(df['Vendor']==V, 1, df["TOP_5_CASH"])
+
+    
+    df = df_sum.append(df_pivot)
     df["TOP_5"] = 0
     for V in TOP_5_ARRAY:
         df["TOP_5"] = np.where(df['Vendor']==V, 1, df["TOP_5"])
