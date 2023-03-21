@@ -89,9 +89,9 @@ def main():
     df_pro_serv = clean_pro_serv(df_pro_serv)
     df_software = clean_software(df_software)
 
-    
-    logging.warning("\n\nData Cleaning Complete\n\n")
-    
+    logging.warning("")
+    logging.warning("Data Cleaning Complete")
+    logging.warning("")
 
     # if data validation is turned on, then run the checkpoint
     if DATA_VALIDATION_CONTROLLER:
@@ -103,9 +103,9 @@ def main():
     df_pro_serv = join_allocation_to_df(df_pro_serv, df_pro_serv_allocation)
     df_software = join_allocation_to_df(df_software, df_software_allocation)
 
-    
-    logging.warning("\n\nJoin Allocation to Projections Complete\n\n")
-    
+    logging.warning("")
+    logging.warning("Join Allocation to Projections Complete")
+    logging.warning("")
 
     df_allocation = pd.concat((df_fte_allocation, df_ftc_allocation, df_pro_serv_allocation, df_software_allocation), ignore_index=True)
     df_actuals = join_allocation_to_df(df_actuals, df_allocation)
@@ -113,17 +113,17 @@ def main():
     df_main = format_final_df(df, ACTUAL_FILE_DATE)
     df_main['SEGMENT'] = "MAIN"
 
-    
-    logging.warning("\n\nJoin Allocation to Actuals Complete\n\n")
-    
+    logging.warning("")
+    logging.warning("Join Allocation to Actuals Complete")
+    logging.warning("")
 
     df_validation = validation_complete(val_dict, df_main)
     df_validation['SEGMENT'] = "VALIDATION"
     OUTPUT_ARRAY = [df_main, df_validation]
 
-    
-    logging.warning("\n\nData Validation Complete\n\n")
-    
+    logging.warning("")
+    logging.warning("Data Validation Complete")
+    logging.warning("")
 
 
     if HEADCOUNT_CONTROLLER:
@@ -141,9 +141,9 @@ def main():
         df_headcount.drop(columns=['EEID', 'Product', 'Title'], inplace=True)
         df_headcount['SEGMENT'] = 'FTE_ORM'
         OUTPUT_ARRAY.append(df_headcount)
-        
-        logging.warning("\n\nHeadcount Calculation Complete\n\n")
-        
+        logging.warning("")
+        logging.warning("Headcount Calculation Complete")
+        logging.warning("")
 
 
     if DELTA_CONTROLLER:
@@ -155,9 +155,9 @@ def main():
         df_delta = calculate_deltas(df_fte, df_ftc, df_pro_serv, df_software, df_actuals, ACTUAL_FILE_DATE, df_name_map)
         df_delta['SEGMENT'] = 'DELTA'
         OUTPUT_ARRAY.append(df_delta)
-        
-        logging.warning("\n\nDelta Calculation Complete\n\n")
-        
+        logging.warning("")
+        logging.warning("Delta Calculation Complete")
+        logging.warning("")
 
     if QUARTERLY_CONTROLLER:
         df_fte = get_data(FTE_QUARTERLY_DICT, RUNNING_IN_DOMO)
@@ -174,17 +174,17 @@ def main():
         df_quarterly = format_quarterly_data(df_fte, df_orm, df_ftc, df_pro_serv, df_software, df_actuals, df_fte_allocation, df_ftc_allocation, df_pro_serv_allocation, df_software_allocation, df_name_map)
         df_quarterly['SEGMENT'] = 'QUARTERLY'
         OUTPUT_ARRAY.append(df_quarterly)
-        
-        logging.warning("\n\nQuarterly Calculation Complete\n\n")
-        
+        logging.warning("")
+        logging.warning("Quarterly Calculation Complete")
+        logging.warning("")
 
     if QM_DIFF_CONTROLLER:
         df_qm_diff = calculate_qm_diff(df_main, df_quarterly)
         df_qm_diff['SEGMENT'] = 'QM_DIFF'
         OUTPUT_ARRAY.append(df_qm_diff)
-        
-        logging.warning("\n\nQM Diff Calculation Complete\n\n")
-        
+        logging.warning("")
+        logging.warning("QM DiffCalculation Complete")
+        logging.warning("")
 
     df = pd.concat(OUTPUT_ARRAY, ignore_index=True)
 

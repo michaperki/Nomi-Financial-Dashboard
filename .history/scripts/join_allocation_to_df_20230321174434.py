@@ -42,7 +42,14 @@ def join_allocation_to_df(df, df_allocation):
 
     # if there are rows where Vendor is "# NO VENDOR" and the ALLOCATION is 0,
     # then replace the ALLOCATION with .5 for CARE and CONNECT
+    # print the number of rows where Vendor is "# NO VENDOR" and the ALLOCATION is 0
+    logging.debug("number of rows where Vendor is # NO VENDOR and the ALLOCATION is 0: " + str(df.loc[(df['Vendor']=='# NO VENDOR') & (df['ALLOCATION']==0)].shape[0]))
+    logging.debug(df.loc[(df['Vendor']=='# NO VENDOR') & (df['ALLOCATION']==0)].head(10).to_string())
+    # print the number of rows where ALLOCATION is 0
+    logging.debug("number of rows where ALLOCATION is 0: " + str(df.loc[df['ALLOCATION']==0].shape[0]))
     logging.debug("allocating .5 to # NO VENDOR for CARE and CONNECT")
+    # print the number of rows where Vendor is "# NO VENDOR" and the ALLOCATION is 0 and the SOURCE is not "FTE_AND_OPEN_ROLES"
+    logging.debug("number of rows where Vendor is # NO VENDOR and the ALLOCATION is 0 and the SOURCE is not FTE_AND_OPEN_ROLES: " + str(df.loc[(df['Vendor']=='# NO VENDOR') & (df['ALLOCATION']==0) & (df['EXPENSE_BUCKET_2']!='FTE_AND_OPEN_ROLES')].shape[0]))
     df.loc[(df['Vendor']=='# NO VENDOR') & (df['ALLOCATION']==0) & (df['BU']=='CARE') & (df['EXPENSE_BUCKET_2']!='FTE_AND_OPEN_ROLES'), 'ALLOCATION'] = .5
     df.loc[(df['Vendor']=='# NO VENDOR') & (df['ALLOCATION']==0) & (df['BU']=='CONNECT') & (df['EXPENSE_BUCKET_2']!='FTE_AND_OPEN_ROLES'), 'ALLOCATION'] = .5
     logging.debug("after adjusting # NO VENDOR, the number of rows where ALLOCATION is 0 is: " + str(df.loc[df['ALLOCATION']==0].shape[0]))
@@ -61,8 +68,28 @@ def join_allocation_to_df(df, df_allocation):
 
     # are there rows where AMOUNT is not null and the AMOUNT is not 0
     # and ALLOCATED_AMOUNT is null or 0?
-    df_missing_spend = df.loc[(df['AMOUNT'] != 0) & ((df['ALLOCATED_AMOUNT'] == 0)) & ((df['PROJ_ACT'] == "ACTUAL") & (df['BU'] != 'NETWORK') & (df['BU'] != 'INSIGHTS'))]
+    df_missing_spend = df.loc[(df['AMOUNT'] != 0) & ((df['ALLOCATED_AMOUNT'] == 0)) & ((df['PROJ_ACT'] == "ACTUAL"))]
     if df_missing_spend.shape[0] > 0:
+        logging.debug("There are rows where AMOUNT is not null and the AMOUNT is not 0 and ALLOCATED_AMOUNT is null or 0")
+        # print the unique values of BU
+        logging.debug("The unique values of BU are: " + str(df_missing_spend['BU'].unique()))
+        # filter out rows where BU is "NETWORK" or "INSIGHTS"
+        df_missing_spend = df_missing_spend.loc[(df_missing_spend['BU'] != 'NETWORK') & (df_missing_spend['BU'] != 'INSIGHTS')]
+        # print the unique values of BU
+        logging.debug("The unique values of BU are: " + str(df_missing_spend['BU'].unique()))
+        # filter out rows where Vendor is "# NO VENDOR"
+        df_missing_spend = df_missing_spend.loc[df_missing_spend['Vendor'] != '# NO VENDOR']
+
+    if df_missing_spend.shape[0] > 0:
+        # print "before the fix" and give the total spend in df
+        logging.debug("Before the fix, the total spend is: " + str(df['ALLOCATED_AMOUNT'].sum()))
+        logging.debug("There are rows where spend is missing:")
+        logging.debug(df_missing_spend.head(10).to_string())
+        # print the count of unique BUs for each Vendor and EXPENSE_BUCKET_2 where AMOUNT is not null and the AMOUNT is not 0
+        logging.debug("The count of unique BUs for each Vendor and EXPENSE_BUCKET_2 where AMOUNT is not null and the AMOUNT is not 0:")
+        logging.debug(df_missing_spend.groupby(['Vendor', 'EXPENSE_BUCKET_2'])['BU'].nunique().to_string())
+        # divide 1 by the count of unique BUs for each Vendor and EXPENSE_BUCKET_2 where AMOUNT is not null and the AMOUNT is not 0
+        # and use that as the ALLOCATION
         df_missing_spend['ALLOCATION'] = 1 / df_missing_spend.groupby(['Vendor', 'EXPENSE_BUCKET_2'])['BU'].transform('nunique')
         # recalculate the ALLOCATED_AMOUNT
         df_missing_spend['ALLOCATED_AMOUNT'] = df_missing_spend['AMOUNT'] * df_missing_spend['ALLOCATION']
@@ -70,7 +97,7 @@ def join_allocation_to_df(df, df_allocation):
         df.loc[df_missing_spend.index, 'ALLOCATION'] = df_missing_spend['ALLOCATION']
         df.loc[df_missing_spend.index, 'ALLOCATED_AMOUNT'] = df_missing_spend['ALLOCATED_AMOUNT']
         # print "after the fix" and give the total spend in df
-        logging.debug("After applying an equal split across missing BUs, the total spend is: " + str(df['ALLOCATED_AMOUNT'].sum()))
+        logging.debug("After the fix, the total spend is: " + str(df['ALLOCATED_AMOUNT'].sum()))
         
     else:
         logging.debug("There are no rows with missing spend")
