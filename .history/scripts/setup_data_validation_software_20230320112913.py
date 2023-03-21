@@ -1,0 +1,17 @@
+from constants import *
+
+# START SCRIPT
+def setup_data_validation_pro_serv(df):
+    # This function sets up the data validation for the PRO_SERV data
+    # It returns a dictionary with the information needed for the validation
+
+    # print the sum of all SPEND_COLS formatted as a currency
+    PRO_SERV_SPEND = df[SPEND_COLS].sum().sum()
+    print("the total PRO_SERV spend is " + "${:,.2f}".format(PRO_SERV_SPEND))
+    print()
+
+    return {
+        'SPEND': PRO_SERV_SPEND,
+        'SPEND_COLS': SPEND_COLS
+    }
+# END SCRIPT
