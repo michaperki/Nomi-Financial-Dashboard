@@ -31,7 +31,7 @@ graph TD;
     C(<b>Headcount Calculation</b> <ol><li>import/transform/output</li>) --> D;
     D(<b>Delta Calculation</b> <ol><li>import/transform/output</li>) --> E;
     E(<b>Quarterly Calculation</b> <ol><li>import/transform/output</li>) --> F;
-    F(<b>QM Diff Calculation</b> <ol><li>use monthly and quarterly ouputs</li><li>add to output list</li>) --> G;
+    F(<b>QM Diff Calculation</b> <ol><li>use monthly and quarterly outputs</li><li>add to output list</li>) --> G;
     G(<b>Analysis Calculation</b> <ol><li>import/transform/output</li>) --> H;
     H(<b>Dashboard Health</b> <ol><li>complete data validation</li><li>add to output list</li>) --> I(<b>Output Data</b> <ol><li>concatenate output list</li><li>write to Domo</li>);
 
