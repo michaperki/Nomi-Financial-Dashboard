@@ -75,7 +75,7 @@ def clean_allocation_sheet(df, name_map):
                 df_allo_total_by_Q = df_allo_total_by_Q.loc[df_allo_total_by_Q['ALLOCATION'] != 1]
                 if df_allo_total_by_Q.shape[0] > 0:
                     logging.error("The fix did not work")
-                    logging.debug(df_allo_total_by_Q.head(10).to_string(index=False))
+                    logging.debug(df_allo_total_by_Q.to_string(index=False))
         else:
             logging.debug("No rows have an ALLOCATION value of 0")
     else:

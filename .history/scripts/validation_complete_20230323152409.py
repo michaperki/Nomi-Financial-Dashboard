@@ -30,11 +30,14 @@ def validation_complete(val_dict, df):
     ACTUALS_SUM_DETAIL_C2 = df[(df['PROJ_ACT'] == 'ACTUAL')].groupby(['EXPENSE_BUCKET', 'MONTH', 'YEAR'])['ALLOCATED_AMOUNT'].sum().reset_index()
     # rename the ALLOCATED_AMOUNT column to ALLOCATED_AMOUNT column to VAL_ACTUAL and the EXPENSE_BUCKET column to VAL_MODEL
     ACTUALS_SUM_DETAIL_C2 = ACTUALS_SUM_DETAIL_C2.rename(columns={'ALLOCATED_AMOUNT': 'VAL_ACTUAL', 'EXPENSE_BUCKET': 'VAL_MODEL'})
+    # join the ACTUALS_SUM_DETAIL_C2 to the ACTUALS_SUM_DETAIL_C0
+    logging.debug(ACTUALS_SUM_DETAIL_C2.head(10).to_string())
+    logging.debug("type: " + str(type(ACTUALS_SUM_DETAIL_C2)))
+    logging.debug(ACTUALS_SUM_DETAIL_C0.head(10).to_string())
+    logging.debug("type: " + str(type(ACTUALS_SUM_DETAIL_C0)))
 
     # add a leading zero to the MONTH column in ACTUALS_SUM_DETAIL_C0
     ACTUALS_SUM_DETAIL_C0['MONTH'] = ACTUALS_SUM_DETAIL_C0['MONTH'].apply(lambda x: '{0:0>2}'.format(x))
-    # replace the "_" with " " in the VAL_MODEL column in ACTUALS_SUM_DETAIL_C0
-    ACTUALS_SUM_DETAIL_C0['VAL_MODEL'] = ACTUALS_SUM_DETAIL_C0['VAL_MODEL'].apply(lambda x: x.replace('_', ' '))
 
     # join the ACTUALS_SUM_DETAIL_C2 to the ACTUALS_SUM_DETAIL_C0
     ACTUALS_SUM_DETAIL_C2 = pd.merge(ACTUALS_SUM_DETAIL_C0, ACTUALS_SUM_DETAIL_C2, how='left', on=['VAL_MODEL', 'MONTH', 'YEAR'])

@@ -92,14 +92,11 @@ def compile_scripts():
             # Get the number of logging statements
             num_loggings = len(re.findall("logging", file_content))
 
-            # Get the number of logging statements
-            num_dfs = len(re.findall("to_string", file_content))
-
             # Print the results
-            results.append([file, num_lines, num_imports, num_loggings, num_dfs])
+            results.append([file, num_lines, num_imports, num_loggings])
 
     # convert the results to a data frame
-    df = pd.DataFrame(results, columns=["file", "num_lines", "num_imports", "num_loggings", "num_dfs"])
+    df = pd.DataFrame(results, columns=["file", "num_lines", "num_imports", "num_loggings"])
 
     # sort the data frame by the number of print statements
     df = df.sort_values(by="num_loggings", ascending=False)
