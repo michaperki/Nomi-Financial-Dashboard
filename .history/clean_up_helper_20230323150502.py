@@ -90,7 +90,7 @@ def compile_scripts():
             num_imports = len(re.findall("import", file_content))
 
             # Get the number of print statements
-            num_prints = len(re.findall("print\(", file_content))
+            num_prints = len(re.findall("print(", file_content))
 
             # Get the number of logging statements
             num_loggings = len(re.findall("logging", file_content))

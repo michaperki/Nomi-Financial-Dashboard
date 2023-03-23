@@ -11,7 +11,7 @@ def get_quarters_from_file_name(df):
 
     # If the Q-budget column has NaN values
     if df["Q-budget"].isnull().values.any():
-        logging.debug("some file names did not include a quarter value, assigning 1")
+        print("some file names did not include a quarter value, assigning 1")
         # replace the NaN values with 1
         df["Q-budget"] = df["Q-budget"].fillna(1)
 
