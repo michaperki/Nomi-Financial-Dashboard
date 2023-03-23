@@ -123,6 +123,27 @@ def join_allocation_to_df(df, df_allocation):
     else:
         logging.info("Pre-allocation and post-allocation match for all rows.")
 
+    # filter for rows where the ALLO_TYPE is SHARED SERVICES
+    df_checking = df.loc[df['ALLO_TYPE']=='SHARED SERVICES']
+
+    # what is the sum of ALLOCATED_AMOUNT for each Vendor, BU, Quarter, Year, and EXPENSE_BUCKET_2?
+    logging.debug("The sum of ALLOCATION for each Vendor, BU, Quarter, Year, and EXPENSE_BUCKET_2:")
+    df_allo_total = df_checking.groupby(['Vendor', 'QUARTER', 'YEAR', 'EXPENSE_BUCKET_2'])['ALLOCATION'].sum().head(10)
+    logging.debug("The number of rows for each Vendor, Quarter, Year, and EXPENSE_BUCKET_2:")
+    df_rows_total = df_checking.groupby(['Vendor', 'QUARTER', 'YEAR', 'EXPENSE_BUCKET_2']).size()
+    # how many unique BU values are there for each Vendor, Quarter, Year, and EXPENSE_BUCKET_2?
+    df_bu_total = df_checking.groupby(['Vendor', 'QUARTER', 'YEAR', 'EXPENSE_BUCKET_2'])['BU'].nunique()
+
+    df_allo_check = df_allo_total / df_rows_total
+    df_allo_check = df_allo_check.reset_index()
+    df_allo_check = df_allo_check.merge(df_bu_total, how='left', left_on=['Vendor', 'QUARTER', 'YEAR', 'EXPENSE_BUCKET_2'], right_on=['Vendor', 'QUARTER', 'YEAR', 'EXPENSE_BUCKET_2'])
+    df_allo_check = df_allo_check.rename(columns={'BU': 'BU_COUNT'})
+    df_allo_check = df_allo_check.loc[df_allo_check['BU_COUNT']!=2]
+    
+    # what is the sum of ALLOCATED_AMOUNT for each Vendor, BU, Quarter, Year, and EXPENSE_BUCKET_2 divided by the number of rows for each Vendor, Quarter, Year, and EXPENSE_BUCKET_2?
+    logging.debug("The sum of ALLOCATION for each Vendor, BU, Quarter, Year, and EXPENSE_BUCKET_2 divided by the number of rows for each Vendor, Quarter, Year, and EXPENSE_BUCKET_2:")
+    logging.debug(df_allo_check.head(25).to_string())
+
     return df
 
 # END SCRIPT
