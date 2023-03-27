@@ -28,7 +28,7 @@ import pandas as pd
 
 # import logging
 import logging
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.WARNING)
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 
 # START SCRIPT

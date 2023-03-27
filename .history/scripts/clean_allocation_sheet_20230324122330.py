@@ -45,7 +45,7 @@ def clean_allocation_sheet(df, name_map):
     # if there are rows in the data frame, print the rows
     if df_allo_total_by_Q_sum.shape[0] > 0:
         ERROR_ARRAY.append(df_allo_total_by_Q_sum)
-        logging.info("There are some allocation-quarters that do not add up to 1.0")
+        logging.warning("There are some allocation-quarters that do not add up to 1.0")
         logging.debug(df_allo_total_by_Q_sum.head(10).to_string(index=False))
         # if there are rows in the data frame, print the rows
         if df_allo_total_missing.shape[0] > 0:
