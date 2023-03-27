@@ -29,7 +29,7 @@ import pandas as pd
 
 # import logging
 import logging
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.WARNING)
 
 
 # START SCRIPT
@@ -144,8 +144,7 @@ def main():
         df_headcount.drop(columns=['EEID', 'Product', 'Title'], inplace=True)
         df_headcount['SEGMENT'] = 'FTE_ORM'
         OUTPUT_ARRAY.append(df_headcount)
-        # not used yet
-        HC_VALID = validate_headcounts(df_fte_hc, df_orm_hc, df_headcount)
+        validate_headcounts(df_main, df_headcount)
         
         logging.warning("\n\nHeadcount Calculation Complete\n\n")
         
@@ -201,5 +200,4 @@ def main():
 # END SCRIPT
 
 if __name__ == "__main__":
-    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
     main()

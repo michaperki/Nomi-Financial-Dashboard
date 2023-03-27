@@ -65,7 +65,6 @@ def compile_scripts():
         "hc_clean_headcounts.py",
         "hc_format_headcounts.py",
         "hc_calculate_headcount.py",
-        "validate_headcounts.py",
         "dt_clean_software_for_deltas.py",
         "dt_clean_ftc_for_deltas.py",
         "dt_clean_pro_serv_for_deltas.py",

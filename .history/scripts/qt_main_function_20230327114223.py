@@ -27,7 +27,6 @@ import pandas as pd
 # import logging
 import logging
 
-
 # START SCRIPT
 def main_function(df_fte, df_open_roles, df_ftc, df_pro_serv, df_software, df_actuals, df_name_map, df_fte_allocation, df_ftc_allocation, df_pro_serv_allocation, df_software_allocation):
 

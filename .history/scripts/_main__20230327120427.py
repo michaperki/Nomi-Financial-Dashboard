@@ -144,8 +144,7 @@ def main():
         df_headcount.drop(columns=['EEID', 'Product', 'Title'], inplace=True)
         df_headcount['SEGMENT'] = 'FTE_ORM'
         OUTPUT_ARRAY.append(df_headcount)
-        # not used yet
-        HC_VALID = validate_headcounts(df_fte_hc, df_orm_hc, df_headcount)
+        validate_headcounts(df_fte_hc, df_headcount)
         
         logging.warning("\n\nHeadcount Calculation Complete\n\n")
         
