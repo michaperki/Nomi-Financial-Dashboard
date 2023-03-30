@@ -8,6 +8,9 @@ This project is a part of [Nomi Health](https://nomihealth.com/g).
 - [Project Intro](#project-intro)
 - [Project Description](#project-description)
 - [Process](#process)
+  1. [Initialize](#initialize)
+  2. [Monthly Calculation](#monthly-calculation)
+  3. [Headcount Calculation](#headcount-calculation)
 - [Needs of this Project](#needs-of-this-project)
 
 
@@ -47,10 +50,14 @@ graph LR;
 
 ```
 ### Initialize
+[(Back to top)](#table-of-contents)
+
 The script runs in both VSCode and Domo. The [detect_environment](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/detect_environment.py) function uses the ```os``` library to detect whether it is being run locally or in Domo. It returns a boolean constant ```RUNNING_IN_DOMO```.
 All constants and the empty output list are declared in [constants](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/constants.py).
 
 ### Monthly Calculation
+[(Back to top)](#table-of-contents)
+
 The monthly calculation is the main transform of this ETL. It involves reformatting and cleaning the data, joining the allocations, and merging the Actuals and Projections.
 The [main script](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/_main_.py) runs the monthly calculations. 
 
@@ -73,6 +80,20 @@ Each projections model has its own cleaning function ([clean_fte](https://github
 Concatenate the cleaned allocations into a single dataframe.
 Then use [join_allocation_to_df](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/join_allocation_to_df.py) to add the allocations to the Actuals and Projections.
 
+<details>
+  <summary>Detailed Explanation of Allocation Process</summary>
+  <br>
+  At this point, we have our Actuals, Projections, and Allocations cleaned and formatted. We created an <code>ALLOCATION_KEY</code> column in each of our Allocation dataframes. Here's an example of an ALLOCATION_KEY: <p><strong>Q1|CARE|SHARED SERVICES|ATLASSIAN|2023|SOFTWARE</strong>.</p>
+  The data that needs to be allocated in the Projections and Actuals is labelled as <strong>SHARED SERVICES</strong> and not assigned to a specific BU. The exception here is FTE Actuals. The FTE Actuals are allocated by the Finance team. They are assigned "NOT SHARED SERVICES" in [clean_actuals_fte](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/clean_actuals_fte.py), so they will never reach the allocation stage.
+
+  [Duplicate_df_for_shared_services](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/duplicate_df_for_shared_services.py) creates duplicate data for each BU. It also creates the <code>ALLOCATION_KEY</code> for the Projections / Actuals. The duplicate spend is resolved by bringing in the allocations.
+
+  If the allocation fails for some reason (for example, a shared spend line item without a vendor name), assign .5 to Care and .5 to Connect for that spend. Assign 0 to both Network and Trust.
+
+  At the beginning and end of the allocation process, check the sum of the spend in the dataframe and confirm that the pre/post numbers are within .01%. Log the results of this validation test using the Python logging library.
+  </details>
+
+
 #### Final Formatting
 Concatenate the Projections and Actuals and feed the final dataframe to [format_final_df](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/format_final_df.py).
 
@@ -80,6 +101,8 @@ Concatenate the Projections and Actuals and feed the final dataframe to [format_
 Confirm that the allocated numbers match the numbers we stored earlier in our validation setup using [validation_complete](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/validation_complete.py).
 
 ### Headcount Calculation
+[(Back to top)](#table-of-contents)
+
 Import the data fresh and use [calculate_headcount](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/hc_calculate_headcount.py) to obtain the headcount calculations.
 
 ## Needs of this project
