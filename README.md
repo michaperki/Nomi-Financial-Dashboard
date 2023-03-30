@@ -11,6 +11,9 @@ This project is a part of [Nomi Health](https://nomihealth.com/g).
   1. [Initialize](#initialize)
   2. [Monthly Calculation](#monthly-calculation)
   3. [Headcount Calculation](#headcount-calculation)
+  4. [Delta Calculation](#delta-calculation)
+  5. [Quarterly Calculation](#quarterly-calculation)
+  6. [QM_Diff Calculation](#qm_diff-calculation)
 - [Needs of this Project](#needs-of-this-project)
 
 
@@ -47,8 +50,8 @@ graph LR;
     B(<b>Monthly Calculation</b></b> <ol><li>import data</li><li>transform</li><li>add to output list</li>) --> C(Headcount Calculation);
     C(<b>Other Calculations</b> <ol><li>Headcount</li><li>Delta</li><li>Quarterly</li><li>QM Diff</li><li>Dashboard Health</li>) --> D;
     D(<b>Output Data</b> <ol><li>concatenate output list</li><li>write to Domo</li>);
-
 ```
+
 ### Initialize
 [(Back to top)](#table-of-contents)
 
@@ -104,6 +107,23 @@ Confirm that the allocated numbers match the numbers we stored earlier in our va
 [(Back to top)](#table-of-contents)
 
 Import the data fresh and use [calculate_headcount](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/hc_calculate_headcount.py) to obtain the headcount calculations.
+
+### Delta Calculation
+[(Back to top)](#table-of-contents)
+
+Import the data fresh and use [dt_calculate_deltas](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/dt_calculate_deltas.py) to obtain the Delta calculations.
+
+### Quarterly Calculation
+[(Back to top)](#table-of-contents)
+
+Import the Quarterly data and use [format_quarterly_data](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/format_quarterly_data.py) to obtain the Quarterly calculations.
+
+### QM_Diff Calculation
+[(Back to top)](#table-of-contents)
+
+Use [calculate_qm_diff](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/calculate_qm_diff.py) to obtain the QM_Diff calculations.
+
+
 
 ## Needs of this project
 [(Back to top)](#table-of-contents)
