@@ -6,7 +6,7 @@ from detect_environment import detect_environment
 from get_data import get_data
 from write_data import write_data
 from get_actuals_date import get_actuals_date
-from setup_data_validation import setup_for_data_validation
+from setup_data_validation import setup_data_validation
 from clean_allocation_sheet import clean_allocation_sheet
 from clean_actuals import clean_actuals
 from clean_fte import clean_fte
