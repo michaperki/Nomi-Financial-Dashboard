@@ -71,7 +71,7 @@ Each projections model has its own cleaning function ([clean_fte](https://github
 
 #### Join Allocations to the Projections and Actuals
 Concatenate the cleaned allocations into a single dataframe.
-Then use (join_allocation_to_df)[https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/join_allocation_to_df.py] to add the allocations to the Actuals and Projections.
+Then use [join_allocation_to_df](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/join_allocation_to_df.py) to add the allocations to the Actuals and Projections.
 
 #### Final Formatting
 Concatenate the Projections and Actuals and feed the final dataframe to [format_final_df](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/format_final_df.py).
