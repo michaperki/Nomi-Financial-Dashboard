@@ -87,7 +87,7 @@ Then use [join_allocation_to_df](https://github.com/michaperki/Nomi-Financial-Da
   <summary>Detailed Explanation of Allocation Process</summary>
   <br>
   At this point, we have our Actuals, Projections, and Allocations cleaned and formatted. We created an <code>ALLOCATION_KEY</code> column in each of our Allocation dataframes. Here's an example of an ALLOCATION_KEY: <p><strong>Q1|CARE|SHARED SERVICES|ATLASSIAN|2023|SOFTWARE</strong>.</p>
-  The data that needs to be allocated in the Projections and Actuals is labelled as <strong>SHARED SERVICES</strong> and not assigned to a specific BU. The exception here is FTE Actuals. The FTE Actuals are allocated by the Finance team. They are assigned "NOT SHARED SERVICES" in [clean_actuals_fte](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/clean_actuals_fte.py), so they will never reach the allocation stage.
+  The data that needs to be allocated in the Projections and Actuals is labelled as <strong>SHARED SERVICES</strong> and not assigned to a specific BU. The exception here is FTE Actuals. The FTE Actuals are allocated by the Finance team. They are assigned "NOT SHARED SERVICES" in <a href=https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/clean_actuals_fte.py>clean_actuals_fte</a>, so they will never reach the allocation stage.
 
   [Duplicate_df_for_shared_services](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/duplicate_df_for_shared_services.py) creates duplicate data for each BU. It also creates the <code>ALLOCATION_KEY</code> for the Projections / Actuals. The duplicate spend is resolved by bringing in the allocations.
 
