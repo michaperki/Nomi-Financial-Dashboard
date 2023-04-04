@@ -38,7 +38,7 @@ The purpose of this project is to clean and compile several Excel models and out
 ## Project Description
 [(Back to top)](#table-of-contents)
 
-Data is provided by the Nomi Financial team and sent straight to Domo via Domo's automated 'upload via email' connector. This codebase replaces a time and labor intensive process created by a consulting team and maintained in Excel models. The data consists of Projected and Actual spend (Monthly and Quarterly spend files are supplied separately), allocation files for each Expense Bucket, and a name map for cross-referencing between the actuals and projections. The specific visualizations required necessitate several different operations (see below).
+Data is provided by the Nomi Financial team and sent straight to Domo via Domo's automated 'upload via email' connector. This codebase replaces a time and labor intensive process created by a consulting team and maintained in Excel models. The data consists of Projected and Actual spend (Monthly and Quarterly spend files supplied separately), allocation files for each Expense Bucket, and a name map for cross-referencing between the actuals and projections. The specific visualizations required necessitate several different operations (see below).
 
 ## Process
 [(Back to top)](#table-of-contents)
@@ -85,13 +85,13 @@ Then use [join_allocation_to_df](https://github.com/michaperki/Nomi-Financial-Da
 
 <details>
   <summary>Detailed Explanation of Allocation Process</summary>
-  <br>
+
   At this point, we have our Actuals, Projections, and Allocations cleaned and formatted. We created an <code>ALLOCATION_KEY</code> column in each of our Allocation dataframes. Here's an example of an ALLOCATION_KEY: <p><strong>Q1|CARE|SHARED SERVICES|ATLASSIAN|2023|SOFTWARE</strong>.</p>
-  The data that needs to be allocated in the Projections and Actuals is labelled as <strong>SHARED SERVICES</strong> and not assigned to a specific BU. (The exception here is FTE Actuals. The FTE Actuals are allocated by the Finance team. They are assigned "NOT SHARED SERVICES" in <a href=https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/clean_actuals_fte.py>clean_actuals_fte</a>, so they will never reach the allocation stage). In order to generate an <code>ALLOCATION_KEY</code> column that matches the key above (note that "CARE" is the second item in the key), we need to create keys for all possible BUs (there are five at the moment) and then join in the allocation tables using that key to filter out BUs not associated with any individual vendor.
+  The data that needs to be allocated in the Projections and Actuals is labelled as <strong>SHARED SERVICES</strong> and not assigned to a specific BU. (The exception here is FTE Actuals. The FTE Actuals are allocated by the Finance team. They are assigned "NOT SHARED SERVICES" in [clean_actuals_fte](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/clean_actuals_fte.py), so they will never reach the allocation stage). In order to generate an <code>ALLOCATION_KEY</code> column that matches the key above (note that "CARE" is the second item in the key), we need to create keys for all possible BUs (there are five at the moment) and then join in the allocation tables using that key to filter out BUs not associated with any individual vendor.
 
   [Duplicate_df_for_shared_services](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/duplicate_df_for_shared_services.py) creates duplicate data for each BU. It also creates the <code>ALLOCATION_KEY</code> for the Projections / Actuals. The duplicate spend is resolved later by bringing in the allocations.
 
-  If the allocation fails for some reason (for example, a shared spend line item without a vendor name), assign 0.5 to Care and 0.5 to Connect for that spend. Assign zero to both Network and Insights.
+  If the allocation fails for some reason (for example, a shared spend line item without a vendor name), assign 0.5 to Care and 0.5 to Connect for that spend. Assign zero to both Network and Insights for these rows.
 
   At the beginning and end of the allocation process, check the sum of the spend in the dataframe and confirm that the pre/post numbers are within .01%. Log the results of this validation test using the Python logging library.
   </details>
@@ -121,7 +121,7 @@ Import the Quarterly data and use [format_quarterly_data](https://github.com/mic
 ### QM_Diff Calculation
 [(Back to top)](#table-of-contents)
 
-Use [calculate_qm_diff](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/calculate_qm_diff.py) to obtain the QM_Diff calculations.
+Use [calculate_qm_diff](https://github.com/michaperki/Nomi-Financial-Dashboard/blob/main/scripts/qm_calculate_qm_diff.py) to obtain the QM_Diff calculations.
 
 
 
