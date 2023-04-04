@@ -1,6 +1,5 @@
-from validate import validate
-import pandas as pd
-import logging
+from imports import *
+
 from constants import *
 
 # START SCRIPT

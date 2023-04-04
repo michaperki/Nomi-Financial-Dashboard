@@ -1,5 +1,4 @@
 from constants import *
-import logging
 from clean_data import clean_data
 
 # START SCRIPT

@@ -1,7 +1,7 @@
-from validate import validate
-import pandas as pd
-import logging
+from imports import *
+
 from constants import *
+from validate import validate
 
 # START SCRIPT
 def validation_complete(val_dict, df):

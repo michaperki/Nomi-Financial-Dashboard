@@ -1,5 +1,5 @@
+from imports import *
 # START SCRIPT
-import os
 
 def detect_environment():
     try:

@@ -1,6 +1,6 @@
+from imports import *
+
 # START SCRIPT
-import pandas as pd
-import warnings
 
 def get_data_from_local(file_name, header=0):
     # This function gets the data from the local file from a csv

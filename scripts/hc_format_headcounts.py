@@ -1,11 +1,7 @@
-import pandas as pd
-import numpy as np
-import calendar
+from imports import *
 from constants import *
-import logging
 
 # START SCRIPT
-import datetime
 
 def format_headcounts(df):
     df = df.copy(deep=True)

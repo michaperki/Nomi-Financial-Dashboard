@@ -1,7 +1,6 @@
 from constants import *
-import logging
+from imports import *
 from clean_data import clean_data
-import pandas as pd
 
 # START SCRIPT
 def clean_allocation_sheet(df, name_map):

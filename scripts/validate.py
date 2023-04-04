@@ -1,4 +1,4 @@
-import logging
+from imports import *
 
 # START SCRIPT
 def validate(expected, actual):

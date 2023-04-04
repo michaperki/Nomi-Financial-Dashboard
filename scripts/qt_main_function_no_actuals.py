@@ -1,4 +1,4 @@
-# this is another test script
+from imports import *
 
 # import detect environment
 from constants import *
@@ -10,11 +10,6 @@ from clean_pro_serv import clean_pro_serv
 from clean_software import clean_software
 from join_allocation_to_df import join_allocation_to_df
 from format_final_df import format_final_df
-
-
-import pandas as pd
-import logging
-
 
 # START SCRIPT
 def main_function_no_actuals(df_fte, df_open_roles, df_ftc, df_pro_serv, df_software, df_fte_allocation, df_ftc_allocation, df_pro_serv_allocation, df_software_allocation, df_name_map):

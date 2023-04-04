@@ -1,9 +1,6 @@
-import logging
-import pandas as pd
+from imports import *
 
 from constants import *
-from clean_data import clean_data
-from clean_projections import clean_projections
 
 # START SCRIPT
 def duplicate_df_for_shared_services(df):

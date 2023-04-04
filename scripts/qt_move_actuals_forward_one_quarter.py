@@ -1,7 +1,4 @@
 from constants import *
-import logging
-import pandas as pd
-
 
 # START SCRIPT
 def move_actuals_forward_one_quarter(df):

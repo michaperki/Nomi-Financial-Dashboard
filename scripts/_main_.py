@@ -25,10 +25,7 @@ from qt_format_quarterly_data import format_quarterly_data
 from qm_calculate_qm_diff import calculate_qm_diff
 from validate_headcounts import validate_headcounts
 
-import pandas as pd
-
-# import logging
-import logging
+from imports import *
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.WARNING)
 
 

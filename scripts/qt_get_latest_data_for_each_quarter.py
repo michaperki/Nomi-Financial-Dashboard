@@ -1,7 +1,6 @@
-from constants import *
-import logging
-import pandas as pd
+from imports import *
 
+from constants import *
 
 # START SCRIPT
 def get_latest_data_for_each_quarter(df):

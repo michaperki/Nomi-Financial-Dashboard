@@ -1,11 +1,8 @@
+from imports import *
+
 from constants import *
-import pandas as pd
-import logging
 
 # START SCRIPT
-from dateutil.relativedelta import relativedelta
-from datetime import timedelta
-
 def clean_headcounts(df):
     df = df.copy(deep=True)
 

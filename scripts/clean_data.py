@@ -1,4 +1,4 @@
-import numpy as np
+from imports import *
 
 # START SCRIPT
 def clean_data(df):

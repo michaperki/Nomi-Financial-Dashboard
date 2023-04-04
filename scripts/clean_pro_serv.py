@@ -1,6 +1,3 @@
-import logging
-import pandas as pd
-
 from constants import *
 from clean_data import clean_data
 from clean_projections import clean_projections

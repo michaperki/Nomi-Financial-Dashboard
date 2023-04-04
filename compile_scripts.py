@@ -24,6 +24,7 @@ def compile_scripts():
 
     # Define the order in which the files should be compiled
     file_order = [
+        "imports.py",
         "constants.py",
         "detect_environment.py",
         "get_data_from_local.py",

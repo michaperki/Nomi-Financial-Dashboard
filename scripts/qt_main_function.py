@@ -1,12 +1,7 @@
-# this is another test script
+from imports import *
 
-# import detect environment
 from constants import *
-from detect_environment import detect_environment
-from get_data import get_data
-from write_data import write_data
 from get_actuals_date import get_actuals_date
-from setup_data_validation import setup_data_validation
 from clean_allocation_sheet import clean_allocation_sheet
 from clean_actuals import clean_actuals
 from clean_fte import clean_fte
@@ -14,19 +9,8 @@ from clean_orm import clean_orm
 from clean_ftc import clean_ftc
 from clean_pro_serv import clean_pro_serv
 from clean_software import clean_software
-from validation_checkpoint import validation_checkpoint
 from join_allocation_to_df import join_allocation_to_df
 from format_final_df import format_final_df
-from validation_complete import validation_complete
-from hc_calculate_headcount import calculate_headcount
-from clean_data import clean_data
-from dt_calculate_deltas import calculate_deltas
-
-import pandas as pd
-
-# import logging
-import logging
-
 
 # START SCRIPT
 def main_function(df_fte, df_open_roles, df_ftc, df_pro_serv, df_software, df_actuals, df_name_map, df_fte_allocation, df_ftc_allocation, df_pro_serv_allocation, df_software_allocation):
